@@ -1,8 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './navbar.css'
 import logo from '../../assets/logo.png'
+import { useContext } from 'react';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Navbar = () => {
+    const { user } = useContext(AuthContext);
     const navLinks = <>
         <NavLink className="" to="/">Home</NavLink>
         <NavLink className="" to="reviews">All Reviews</NavLink>
@@ -11,11 +14,11 @@ const Navbar = () => {
         <NavLink className="" to="myWatchlist">Game Watchlist</NavLink>
     </>
     return (
-        <div className='w-11/12 mx-auto'>
-            <div className="navbar bg-base-100">
+        <div className='w-11/12 mx-auto my-2'>
+            <div className="navbar bg-base-100 p-0">
                 <div className="navbar-start">
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                        <div tabIndex={0} role="button" className="px-0 btn btn-ghost lg:hidden">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-5 w-5"
@@ -46,12 +49,12 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end space-x-2">
-                    <div className='rounded-full border'>
-                    <img src={logo} className='w-8' alt="" />
-                    </div>
-                    <button className="btn btn-xs rounded-none hover:bg-transparent text-primary">Login</button>
-                    <button className="btn btn-xs text-white bg-primary hover:bg-primary rounded-none">Register</button>
-                    <button className="btn btn-xs text-white bg-primary hover:bg-primary rounded-none">Logout</button>
+                    {
+                        user && <img src={user.photoURL} className='w-6 sm:w-8 rounded-full' alt="" />
+                    }
+                    <Link to="login" className={!user ? "btn btn-xs rounded-none hover:bg-transparent text-primary" : "hidden"}>Login</Link>
+                    <Link to="register" className={!user ? "btn btn-xs text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Register</Link>
+                    <button to="" className={user ? "btn btn-xs text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
                 </div>
             </div>
         </div>

@@ -1,21 +1,34 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import 'animate.css';
+import { AuthContext } from "../../providers/AuthProvider";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
+    const  { auth, setUser } = useContext(AuthContext);
+    const provider = new GoogleAuthProvider();
     const [isPassShowing, setIsPassShowing] = useState(false);
     const handleShowPass = () => setIsPassShowing(!isPassShowing);
+    const handleGoogleClick = () => {
+        signInWithPopup(auth, provider)
+        .then(res => {
+            setUser(res.user)
+            console.log(res.user.photoURL);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
     return (
-        <div className="w-3/5 mx-auto border rounded-xl shadow-lg lg:my-10 flex flex-col sm:flex-row">
-            <div className="animate__animated animate__fadeInLeft bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
+        <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg lg:my-10 flex flex-col sm:flex-row">
+            <div className="bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl sm:pt-0 font-bold">Welcome Back!</h1>
                 <p>Please login to review and see other user review details.</p>
             </div>
-            <div className="animate__animated animate__fadeInRight w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10 lg:py-20">
+            <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10 lg:py-20">
                 <h1 className="text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary">Login</h1>
                 <div className="w-1/2 mx-auto flex justify-center pt-5">
-                <button className="btn btn-sm btn-outline rounded-full text-gray-500 hover:bg-primary">
+                <button onClick={handleGoogleClick} className="btn btn-sm btn-outline rounded-full text-gray-500 hover:bg-primary">
                     Continue with
                     <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" className="w-5" alt="" />
                 </button>
