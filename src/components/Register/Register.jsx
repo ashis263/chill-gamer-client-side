@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import Swal from 'sweetalert2'
 
 const Register = () => {
     const { auth, setUser, setIsLoading } = useContext(AuthContext);
@@ -17,10 +18,17 @@ const Register = () => {
         .then(res => {
             setUser(res.user);
             setIsLoading(false);
+            Toast.fire({
+                icon: "success",
+                title: "Signed in successfully"
+              });
             navigate(location.state ? location.state : "/");
         })
         .catch(err => {
-            console.log(err.code);
+            Toast.fire({
+                icon: "error",
+                title: err.code
+              });
         })
     };
     const handleFormSubmit = (e) => {
@@ -36,6 +44,10 @@ const Register = () => {
         } else {
             createUserWithEmailAndPassword(auth, email, password)
             .then((res) => {
+                Toast.fire({
+                    icon: "success",
+                    title: "Registered successfully"
+                  });
                 e.target.reset();
                 setError('');
                 updateProfile(auth.currentUser, {
@@ -46,14 +58,31 @@ const Register = () => {
                     navigate(location.state ? location.state : "/");
                 })
                 .catch(err => {
-                    console.log(err.code);
+                    Toast.fire({
+                        icon: "error",
+                        title: err.code
+                      });
                 });
             })
             .catch(err => {
-                console.log(err.code);
+                Toast.fire({
+                    icon: "error",
+                    title: err.code
+                  });
             })
         }
-    }
+    };
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
             <div className=" bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">

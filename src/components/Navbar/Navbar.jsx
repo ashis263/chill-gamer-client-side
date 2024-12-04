@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { signOut } from 'firebase/auth';
 import { Tooltip } from 'react-tooltip';
+import Swal from 'sweetalert2'
 
 const Navbar = () => {
     const { user, auth, setUser } = useContext(AuthContext);
@@ -19,6 +20,21 @@ const Navbar = () => {
     const handleLogout = () => {
         signOut(auth);
         setUser(null);
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Logged out successfully"
+          });
         navigate('/');
     }
     return (

@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import Swal from 'sweetalert2'
 
 const Login = () => {
     const  { auth, setUser, setIsLoading } = useContext(AuthContext);
@@ -16,10 +17,17 @@ const Login = () => {
         .then(res => {
             setUser(res.user);
             setIsLoading(false);
+              Toast.fire({
+                icon: "success",
+                title: "Signed in successfully"
+              });
             navigate(location.state ? location.state : "/");
         })
         .catch(err => {
-            console.log(err);
+              Toast.fire({
+                icon: "error",
+                title: err.code
+              });
         })
     };
     const handleFormSubmit = (e) => {
@@ -30,13 +38,31 @@ const Login = () => {
         .then(res => {
             setUser(res.user);
             setIsLoading(false);
+            Toast.fire({
+                icon: "success",
+                title: "Signed in successfully"
+              });
             e.target.reset();
             navigate(location.state ? location.state : "/");
         })
         .catch(err => {
-            console.log(err.code);
+            Toast.fire({
+                icon: "error",
+                title: err.code
+              });
         })
     }
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg lg:my-10 flex flex-col sm:flex-row">
             <div className="bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
