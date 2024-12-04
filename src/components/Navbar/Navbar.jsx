@@ -3,9 +3,10 @@ import './navbar.css'
 import logo from '../../assets/logo.png'
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
+import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
-    const { user } = useContext(AuthContext);
+    const { user, auth, setUser } = useContext(AuthContext);
     const navLinks = <>
         <NavLink className="" to="/">Home</NavLink>
         <NavLink className="" to="reviews">All Reviews</NavLink>
@@ -13,6 +14,10 @@ const Navbar = () => {
         <NavLink className="" to="myReviews">My Reviews</NavLink>
         <NavLink className="" to="myWatchlist">Game Watchlist</NavLink>
     </>
+    const handleLogout = () =>{
+        signOut(auth);
+        setUser(null);
+    }
     return (
         <div className='w-11/12 mx-auto my-2'>
             <div className="navbar bg-base-100 p-0">
@@ -50,11 +55,11 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end space-x-2">
                     {
-                        user && <img src={user.photoURL} className='w-6 sm:w-8 rounded-full' alt="" />
+                        user && <img src={user.photoURL} className='w-6 h-6 sm:h-8 sm:w-8 rounded-full' alt="" />
                     }
                     <Link to="login" className={!user ? "btn btn-xs rounded-none hover:bg-transparent text-primary" : "hidden"}>Login</Link>
                     <Link to="register" className={!user ? "btn btn-xs text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Register</Link>
-                    <button to="" className={user ? "btn btn-xs text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
+                    <button onClick={handleLogout} className={user ? "btn btn-xs text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
                 </div>
             </div>
         </div>

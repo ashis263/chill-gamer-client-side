@@ -2,21 +2,35 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
-    const  { auth, setUser } = useContext(AuthContext);
+    const  { auth, setUser, setIsLoading } = useContext(AuthContext);
     const provider = new GoogleAuthProvider();
     const [isPassShowing, setIsPassShowing] = useState(false);
     const handleShowPass = () => setIsPassShowing(!isPassShowing);
     const handleGoogleClick = () => {
         signInWithPopup(auth, provider)
         .then(res => {
-            setUser(res.user)
-            console.log(res.user.photoURL);
+            setUser(res.user);
+            setIsLoading(false);
         })
         .catch(err => {
             console.log(err);
+        })
+    };
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        signInWithEmailAndPassword(auth, email, password)
+        .then(res => {
+            setUser(res.user);
+            setIsLoading(false);
+            e.target.reset();
+        })
+        .catch(err => {
+            console.log(err.code);
         })
     }
     return (
@@ -33,7 +47,7 @@ const Login = () => {
                     <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" className="w-5" alt="" />
                 </button>
                 </div>
-                <form onSubmit="" className="w-11/12 mx-auto">
+                <form onSubmit={handleFormSubmit} className="w-11/12 mx-auto">
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Email</span>

@@ -2,21 +2,53 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 
 const Register = () => {
-    const { auth, setUser } = useContext(AuthContext);
-    const provider = new GoogleAuthProvider();
+    const { auth, setUser, setIsLoading } = useContext(AuthContext);
     const [isPassShowing, setIsPassShowing] = useState(false);
+    const [error, setError] = useState('');
+    const provider = new GoogleAuthProvider();
     const handleShowPass = () => setIsPassShowing(!isPassShowing);
     const handleGoogleClick = () => {
         signInWithPopup(auth, provider)
         .then(res => {
             setUser(res.user);
+            setIsLoading(false);
         })
-        .then(err => {
+        .catch(err => {
             console.log(err.code);
         })
+    };
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const photo = e.target.photo.value;
+        const password = e.target.password.value;
+        if(password.length<6){
+            setError('Password must be of atleast six characters');
+        } else if(!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)){
+            setError('Password must contain one uppercase and one lowercase letter')
+        } else {
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((res) => {
+                e.target.reset();
+                setError('');
+                updateProfile(auth.currentUser, {
+                    displayName: name, photoURL: photo
+                })
+                .then(() => {
+                    setUser(res.user);
+                })
+                .catch(err => {
+                    console.log(err.code);
+                });
+            })
+            .catch(err => {
+                console.log(err.code);
+            })
+        }
     }
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
@@ -32,7 +64,7 @@ const Register = () => {
                     <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" className="w-5" alt="" />
                 </button>
                 </div>
-                <form onSubmit="" className="w-11/12 mx-auto">
+                <form onSubmit={handleFormSubmit} className="w-11/12 mx-auto">
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Name</span>
@@ -56,6 +88,7 @@ const Register = () => {
                             <span className="label-text">Password</span>
                         </label>
                         <input type={!isPassShowing ? 'password' : 'text'} name="password" placeholder="Password" className="input input-bordered" required />
+                        <p className="text-red-500 font semibold text-center p-2">{error}</p>
                         <div onClick={handleShowPass} className="absolute right-6 text-gray-500 top-12 text-2xl">
                             {
                                 !isPassShowing ? <IoIosEye /> : <IoIosEyeOff />
