@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -7,6 +7,8 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 const Login = () => {
     const  { auth, setUser, setIsLoading } = useContext(AuthContext);
     const provider = new GoogleAuthProvider();
+    const location = useLocation();
+    const navigate = useNavigate()
     const [isPassShowing, setIsPassShowing] = useState(false);
     const handleShowPass = () => setIsPassShowing(!isPassShowing);
     const handleGoogleClick = () => {
@@ -14,6 +16,7 @@ const Login = () => {
         .then(res => {
             setUser(res.user);
             setIsLoading(false);
+            navigate(location.state ? location.state : "/");
         })
         .catch(err => {
             console.log(err);
@@ -28,6 +31,7 @@ const Login = () => {
             setUser(res.user);
             setIsLoading(false);
             e.target.reset();
+            navigate(location.state ? location.state : "/");
         })
         .catch(err => {
             console.log(err.code);
