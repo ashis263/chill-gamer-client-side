@@ -17,21 +17,30 @@ const Register = () => {
     const handleShowPass = () => setIsPassShowing(!isPassShowing);
     const handleGoogleClick = () => {
         signInWithPopup(auth, provider)
-        .then(res => {
-            setUser(res.user);
-            setIsLoading(false);
-            Toast.fire({
-                icon: "success",
-                title: "Signed in successfully"
-              });
-            navigate(location.state ? location.state : "/");
-        })
-        .catch(err => {
-            Toast.fire({
-                icon: "error",
-                title: err.code
-              });
-        })
+            .then(res => {
+                const user = res.user;
+                const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL };
+                fetch('http://localhost:5000/users', {
+                    method: 'put',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(current)
+                })
+                setUser(res.user);
+                setIsLoading(false);
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                });
+                navigate(location.state ? location.state : "/");
+            })
+            .catch(err => {
+                Toast.fire({
+                    icon: "error",
+                    title: err.code
+                });
+            })
     };
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -39,39 +48,48 @@ const Register = () => {
         const email = e.target.email.value;
         const photo = e.target.photo.value;
         const password = e.target.password.value;
-        if(password.length<6){
+        if (password.length < 6) {
             setError('Password must be of atleast six characters');
-        } else if(!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)){
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)) {
             setError('Password must contain one uppercase and one lowercase letter')
         } else {
             createUserWithEmailAndPassword(auth, email, password)
-            .then((res) => {
-                Toast.fire({
-                    icon: "success",
-                    title: "Registered successfully"
-                  });
-                e.target.reset();
-                setError('');
-                updateProfile(auth.currentUser, {
-                    displayName: name, photoURL: photo
-                })
-                .then(() => {
-                    setUser(res.user);
-                    navigate(location.state ? location.state : "/");
+                .then((res) => {
+                    Toast.fire({
+                        icon: "success",
+                        title: "Registered successfully"
+                    });
+                    e.target.reset();
+                    setError('');
+                    updateProfile(auth.currentUser, {
+                        displayName: name, photoURL: photo
+                    })
+                        .then(() => {
+                            const user = res.user;
+                            const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL };
+                            fetch('http://localhost:5000/users', {
+                                method: 'put',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(current)
+                            })
+                            setUser(res.user);
+                            navigate(location.state ? location.state : "/");
+                        })
+                        .catch(err => {
+                            Toast.fire({
+                                icon: "error",
+                                title: err.code
+                            });
+                        });
                 })
                 .catch(err => {
                     Toast.fire({
                         icon: "error",
                         title: err.code
-                      });
-                });
-            })
-            .catch(err => {
-                Toast.fire({
-                    icon: "error",
-                    title: err.code
-                  });
-            })
+                    });
+                })
         }
     };
     const Toast = Swal.mixin({
@@ -81,22 +99,22 @@ const Register = () => {
         timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
         }
-      });
+    });
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
             <div className=" bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
-            <Lottie animationData={register} loop={true} />
+                <Lottie animationData={register} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10">
                 <h1 className="text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary">Register</h1>
                 <div className="w-1/2 mx-auto flex justify-center pt-5">
-                <button onClick={handleGoogleClick} className="btn btn-sm btn-outline rounded-full text-gray-500 hover:bg-primary">
-                    Continue with
-                    <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" className="w-5" alt="" />
-                </button>
+                    <button onClick={handleGoogleClick} className="btn btn-sm btn-outline rounded-full text-gray-500 hover:bg-primary">
+                        Continue with
+                        <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" className="w-5" alt="" />
+                    </button>
                 </div>
                 <form onSubmit={handleFormSubmit} className="w-11/12 mx-auto">
                     <div className="form-control">
