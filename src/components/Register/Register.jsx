@@ -4,6 +4,8 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import Swal from 'sweetalert2'
+import Lottie from "lottie-react";
+import register from "../../assets/register.json";
 
 const Register = () => {
     const { auth, setUser, setIsLoading } = useContext(AuthContext);
@@ -86,8 +88,7 @@ const Register = () => {
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
             <div className=" bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
-                <h1 className="text-2xl sm:text-3xl lg:text-5xl sm:pt-0 font-bold">Hello, Friend!</h1>
-                <p>Register to review and see other user review details.</p>
+            <Lottie animationData={register} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10">
                 <h1 className="text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary">Register</h1>
@@ -114,7 +115,7 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Photo URL</span>
                         </label>
-                        <input type="text" name="photo" placeholder="Photo URL" className="input input-bordered" required />
+                        <input type="url" name="photo" placeholder="Photo URL" className="input input-bordered" required />
                     </div>
                     <div className="form-control relative">
                         <label className="label">

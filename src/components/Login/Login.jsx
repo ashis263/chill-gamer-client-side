@@ -4,6 +4,8 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import Swal from 'sweetalert2'
+import Lottie from "lottie-react";
+import login from "../../assets/login.json";
 
 const Login = () => {
     const  { auth, setUser, setIsLoading } = useContext(AuthContext);
@@ -66,8 +68,7 @@ const Login = () => {
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg lg:my-10 flex flex-col sm:flex-row">
             <div className="bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
-                <h1 className="text-2xl sm:text-3xl lg:text-5xl sm:pt-0 font-bold">Welcome Back!</h1>
-                <p>Please login to review and see other user review details.</p>
+            <Lottie animationData={login} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10 lg:py-20">
                 <h1 className="text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary">Login</h1>
