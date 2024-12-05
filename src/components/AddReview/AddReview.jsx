@@ -2,9 +2,12 @@ import Lottie from "lottie-react";
 import review from "../../assets/review.json";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 const AddReview = () => {
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
         const name = e.target.name.value;
@@ -15,14 +18,49 @@ const AddReview = () => {
         const year = e.target.year.value;
         const genre = e.target.genre.value;
         const rating = e.target.rating.value;
-        console.log(name,
+        const currentReview = {
+            name,
             email,
             cover,
             title,
             review,
             year,
             genre,
-            rating);
+            rating
+        };
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+        fetch('http://localhost:5000/reviews', {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(currentReview)
+        })
+        .then(res => {
+            console.log(res);
+            Toast.fire({
+                icon: "success",
+                title: "Review added successfully"
+              });
+            e.target.reset();
+            navigate("/myReviews");
+        })
+        .catch(err => {
+            Toast.fire({
+                icon: "error",
+                title: err
+              });
+        })
     }
     return (
         <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg flex flex-col sm:flex-row">
