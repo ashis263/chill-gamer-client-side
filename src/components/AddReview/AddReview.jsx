@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
 const AddReview = () => {
-    const { user } = useContext(AuthContext);
+    const { user,userReviews, setUserReviews } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -47,6 +47,7 @@ const AddReview = () => {
             body: JSON.stringify(currentReview)
         })
         .then(() => {
+            setUserReviews([...userReviews, currentReview])
             Toast.fire({
                 icon: "success",
                 title: "Review added successfully"

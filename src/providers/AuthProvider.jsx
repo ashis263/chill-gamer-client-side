@@ -9,6 +9,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [ userReviews, setUserReviews ] = useState([]);
+    const [ watchlist, setWatchlist ] = useState([]);
     const [isloading, setIsLoading] = useState(true);
     const auth = getAuth(app);
     useEffect(() => {
@@ -17,7 +18,10 @@ const AuthProvider = ({ children }) => {
                 setUser(user);
                 fetch(`http://localhost:5000/reviews/${user.email}`)
                 .then(res => res.json())
-                .then(data => setUserReviews(data))
+                .then(data => setUserReviews(data));
+                fetch(`http://localhost:5000/watchlist/${user.email}`)
+                .then(res => res.json())
+                .then(data => setWatchlist(data));
             }
             setIsLoading(false);
             return () => unsubscribe();
@@ -30,7 +34,10 @@ const AuthProvider = ({ children }) => {
         user,
         isloading,
         setIsLoading,
-        userReviews
+        userReviews,
+        setUserReviews,
+        watchlist,
+        setWatchlist
     }
     return (
         <AuthContext.Provider value={authData}>

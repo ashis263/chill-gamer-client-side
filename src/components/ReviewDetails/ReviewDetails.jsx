@@ -5,7 +5,7 @@ import { AuthContext } from '../../providers/AuthProvider'
 import Swal from 'sweetalert2';
 
 const ReviewDetails = () => {
-    const { user } = useContext(AuthContext);
+    const { user, watchlist, setWatchlist } = useContext(AuthContext);
     const review = useLoaderData();
     const rating = {
         size: 40,
@@ -23,10 +23,10 @@ const ReviewDetails = () => {
           toast.onmouseleave = Swal.resumeTimer;
         }
       });
-    const handleWishlist = () => {
+    const handleWatchlist = () => {
         const { _id, ...updatedReview } = review;
-        const dataToSaveInDatabase = { ...updatedReview, findingKey: _id+user.email, wishlister: user.displayName, wishlisterEmail: user.email};
-        fetch('http://localhost:5000/wishlist', {
+        const dataToSaveInDatabase = { ...updatedReview, findingKey: _id+user.email, watchlister: user.displayName, watchlisterEmail: user.email};
+        fetch('http://localhost:5000/watchlist', {
             method: 'put',
             headers: {
                 'content-type' : 'application/json'
@@ -36,14 +36,15 @@ const ReviewDetails = () => {
         .then(res => res.json())
         .then(data => {
             if(data.upsertedId){
+                setWatchlist([ ...watchlist, dataToSaveInDatabase]);
                 Toast.fire({
                     icon: "success",
-                    title: "Added to wishlist"
+                    title: "Added to watchlist"
                   });
             }else if(data.matchedCount){
                 Toast.fire({
                     icon: "info",
-                    title: "Already added to wishlist"
+                    title: "Already added to watchlist"
                   });
             }
         })
@@ -65,7 +66,7 @@ const ReviewDetails = () => {
                         <p className=""><span className="text-primary">Genre:</span> {review.genre}</p>
                         <p className=""><span className="text-primary">Released:</span> {review.year}</p>
                     </div>
-                    <button onClick={handleWishlist} className={user ? "btn btn-xs sm:btn-sm hover:bg-primary bg-primary text-white mt-5" : "hidden"}>Add to watchlist</button>
+                    <button onClick={handleWatchlist} className={user ? "btn btn-xs sm:btn-sm hover:bg-primary bg-primary text-white mt-5" : "hidden"}>Add to watchlist</button>
                     <div className="pt-10 sm:pt-20 text-center sm:text-start">
                         <p className="text-primary font-semibold">Review by:</p>
                         <div className="sm:flex gap-10">

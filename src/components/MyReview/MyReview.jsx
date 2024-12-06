@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import ReactStars from "react-rating-stars-component";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import { useLocation } from 'react-router-dom';
 
 const MyReview = ({ review }) => {
+    const location = useLocation();
+    const path = location.pathname;
     const rating = {
         size: 20,
         value: review.rating,
@@ -27,7 +30,10 @@ const MyReview = ({ review }) => {
             <td className='text-center'>
                 <ReactStars {...rating} />
             </td>
-            <th className='text-center space-y-2'>
+            <td className={ path === '/myReviews' ? "hidden" : 'text-center font-mono'}>
+                {review.name}
+            </td>
+            <th className={path === '/myReviews' ? "text-center space-y-2" : "hidden"}>
                 <button className="btn text-lg sm:pr-5 btn-ghost btn-xs">
                 <MdOutlineEdit />
                 </button>
