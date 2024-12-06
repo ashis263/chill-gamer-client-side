@@ -8,11 +8,13 @@ import MyWatchlist from '../components/MyWatchlist/MyWatchlist';
 import PrivateRoute from '../routes/PrivateRoute'
 import AllReviews from '../components/AllReviews/AllReviews';
 import ReviewDetails from '../components/ReviewDetails/ReviewDetails';
+import Errorpage from '../components/Errorpage/Errorpage';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout></MainLayout>,
+        errorElement: <Errorpage></Errorpage>,
         children: ([
             {
                 path:'login',
