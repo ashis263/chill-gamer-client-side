@@ -46,8 +46,7 @@ const AddReview = () => {
             },
             body: JSON.stringify(currentReview)
         })
-        .then(res => {
-            console.log(res);
+        .then(() => {
             Toast.fire({
                 icon: "success",
                 title: "Review added successfully"

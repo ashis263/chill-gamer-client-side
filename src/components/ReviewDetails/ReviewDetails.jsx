@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router"
 import ReactStars from "react-rating-stars-component";
 import { useContext } from "react";
 import { AuthContext } from '../../providers/AuthProvider'
+import Swal from 'sweetalert2';
 
 const ReviewDetails = () => {
     const { user } = useContext(AuthContext);
@@ -11,6 +12,42 @@ const ReviewDetails = () => {
         value: review.rating,
         edit: false,
     };
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+    const handleWishlist = () => {
+        const { _id, ...updatedReview } = review;
+        const dataToSaveInDatabase = { ...updatedReview, findingKey: _id+user.email, wishlister: user.displayName, wishlisterEmail: user.email};
+        fetch('http://localhost:5000/wishlist', {
+            method: 'put',
+            headers: {
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(dataToSaveInDatabase)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.upsertedId){
+                Toast.fire({
+                    icon: "success",
+                    title: "Added to wishlist"
+                  });
+            }else if(data.matchedCount){
+                Toast.fire({
+                    icon: "info",
+                    title: "Already added to wishlist"
+                  });
+            }
+        })
+    }
     return (
         <div className="w-11/12 mx-auto rounded-xl p-5 sm:p-10 shadow-primary shadow-sm">
             <h1 className="w-4/5 mx-auto text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary mb-5 sm:mb-10">{review.title}</h1>
@@ -28,7 +65,7 @@ const ReviewDetails = () => {
                         <p className=""><span className="text-primary">Genre:</span> {review.genre}</p>
                         <p className=""><span className="text-primary">Released:</span> {review.year}</p>
                     </div>
-                    <button className={user ? "btn btn-xs sm:btn-sm hover:bg-primary bg-primary text-white mt-5" : "hidden"}>Add to watchlist</button>
+                    <button onClick={handleWishlist} className={user ? "btn btn-xs sm:btn-sm hover:bg-primary bg-primary text-white mt-5" : "hidden"}>Add to watchlist</button>
                     <div className="pt-10 sm:pt-20 text-center sm:text-start">
                         <p className="text-primary font-semibold">Review by:</p>
                         <div className="sm:flex gap-10">
