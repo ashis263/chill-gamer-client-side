@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -8,11 +8,12 @@ import Lottie from "lottie-react";
 import login from "../../assets/login.json";
 
 const Login = () => {
-    const  { auth, setUser, setIsLoading } = useContext(AuthContext);
+    const  { auth, user, setUser, setIsLoading } = useContext(AuthContext);
     const provider = new GoogleAuthProvider();
     const location = useLocation();
     const navigate = useNavigate()
     const [isPassShowing, setIsPassShowing] = useState(false);
+    if(user){ return <Navigate to="/" />};
     const handleShowPass = () => setIsPassShowing(!isPassShowing);
     const handleGoogleClick = () => {
         signInWithPopup(auth, provider)

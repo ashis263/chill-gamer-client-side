@@ -62,7 +62,7 @@ const Navbar = () => {
                             {navLinks}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost hover:bg-transparent text-xl px-0">
+                    <a onClick={() =>navigate('/')} className="btn btn-ghost hover:bg-transparent text-xl px-0">
                         <img src={logo} className='w-10' alt="" />
                         <h2 className='font-bold hidden sm:block'>Chill Gamer</h2>
                     </a>
