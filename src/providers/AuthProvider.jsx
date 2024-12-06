@@ -8,12 +8,16 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [ userReviews, setUserReviews ] = useState([]);
     const [isloading, setIsLoading] = useState(true);
     const auth = getAuth(app);
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             if(user){
                 setUser(user);
+                fetch(`http://localhost:5000/reviews/${user.email}`)
+                .then(res => res.json())
+                .then(data => setUserReviews(data))
             }
             setIsLoading(false);
             return () => unsubscribe();
@@ -25,7 +29,8 @@ const AuthProvider = ({ children }) => {
         setUser,
         user,
         isloading,
-        setIsLoading
+        setIsLoading,
+        userReviews
     }
     return (
         <AuthContext.Provider value={authData}>
