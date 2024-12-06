@@ -65,15 +65,15 @@ const Register = () => {
                         displayName: name, photoURL: photo
                     })
                         .then(() => {
-                            const user = res.user;
-                            const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL };
-                            fetch('http://localhost:5000/users', {
-                                method: 'put',
-                                headers: {
-                                    'content-type': 'application/json'
-                                },
-                                body: JSON.stringify(current)
-                            })
+                    const user = res.user;
+                    const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL };
+                    fetch('http://localhost:5000/users', {
+                        method: 'put',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(current)
+                    })
                             setUser(res.user);
                             navigate(location.state ? location.state : "/");
                         })
