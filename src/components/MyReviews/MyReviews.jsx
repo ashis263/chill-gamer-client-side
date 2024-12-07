@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import MyReview from "../MyReview/MyReview";
+import ReviewData from "../ReviewData/ReviewData";
 
 const MyReviews = () => {
     const { userReviews } = useContext(AuthContext);
@@ -20,7 +20,7 @@ const MyReviews = () => {
                     </thead>
                     <tbody>
                     {
-                        userReviews && userReviews.map(review => <MyReview key={review._id} review={review}></MyReview>)
+                        userReviews && userReviews.map(review => <ReviewData key={review._id} currentReview={review}></ReviewData>)
                     }
                     </tbody>
                 </table>
