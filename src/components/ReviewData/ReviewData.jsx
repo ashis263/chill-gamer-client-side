@@ -17,6 +17,7 @@ const MyReview = ({ currentReview }) => {
     const { user, userReviews, setUserReviews, watchlist, setWatchlist } = useContext(AuthContext);
     const location = useLocation();
     const path = location.pathname;
+    const reviewsWithoutUpdated = userReviews.filter(item => item._id !== reviewToRender._id);
     const Toast = Swal.mixin({
         toast: true,
         position: "top",
@@ -62,8 +63,9 @@ const MyReview = ({ currentReview }) => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount) {
-                    const reviewsWithoutUpdated = userReviews.filter(item => item._id !== reviewToRender._id);
-                    setUserReviews([...reviewsWithoutUpdated, updatedReview]);
+                    const index = userReviews.indexOf(currentReview);
+                    userReviews.splice(index, 1, updatedReview);
+                    setUserReviews([...userReviews]);
                     setReviewToRender({ ...updatedReview });
                     if (watchlist.length) {
                         if (existingWatchItem) {
@@ -95,8 +97,46 @@ const MyReview = ({ currentReview }) => {
                 Toast.fire({
                     icon: "error",
                     title: err
-                  });
+                });
             });
+    };
+    const handleDelete = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#48ac90",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('http://localhost:5000/reviews', {
+                    method: 'DELETE',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: reviewToRender._id })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount) {
+                            setUserReviews(reviewsWithoutUpdated)
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your review has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        Toast.fire({
+                            icon: "error",
+                            title: err
+                        });
+                    })
+            }
+        });
     }
     return (
         <tr>
@@ -132,7 +172,7 @@ const MyReview = ({ currentReview }) => {
                 <Tooltip anchorSelect="#edtBtn" place="top">
                     Update Review
                 </Tooltip>
-                <button id='dltBtn' className="btn text-lg btn-ghost btn-xs"><MdDeleteOutline /></button>
+                <button onClick={handleDelete} id='dltBtn' className="btn text-lg btn-ghost btn-xs"><MdDeleteOutline /></button>
                 <Tooltip anchorSelect="#dltBtn" place="top">
                     Delete Review
                 </Tooltip>
