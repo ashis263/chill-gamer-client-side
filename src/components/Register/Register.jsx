@@ -8,7 +8,7 @@ import Lottie from "lottie-react";
 import register from "../../assets/register.json";
 
 const Register = () => {
-    const { auth, user, setUser, setIsLoading } = useContext(AuthContext);
+    const { auth, user, setUser, setIsLoading, isModeDark } = useContext(AuthContext);
     const [isPassShowing, setIsPassShowing] = useState(false);
     const [error, setError] = useState('');
     const location = useLocation();
@@ -105,14 +105,14 @@ const Register = () => {
         }
     });
     return (
-        <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto border rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
-            <div className=" bg-primary text-white sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
+        <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto shadow-primary rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
+            <div className=" bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
                 <Lottie animationData={register} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10">
                 <h1 className="text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary">Register</h1>
                 <div className="w-1/2 mx-auto flex justify-center pt-5">
-                    <button onClick={handleGoogleClick} className="btn btn-sm btn-outline rounded-full text-gray-500 hover:bg-primary">
+                    <button onClick={handleGoogleClick} className="btn btn-sm btn-outline rounded-full text-gray-300 hover:bg-primary">
                         Continue with
                         <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" className="w-5" alt="" />
                     </button>
@@ -120,29 +120,29 @@ const Register = () => {
                 <form onSubmit={handleFormSubmit} className="w-11/12 mx-auto">
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Name</span>
+                            <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Name</span>
                         </label>
                         <input type="text" name="name" placeholder="Name" className="input input-bordered" required />
                     </div>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Email</span>
+                            <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Email</span>
                         </label>
                         <input type="email" name="email" placeholder="Email" className="input input-bordered" required />
                     </div>
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text">Photo URL</span>
+                            <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Photo URL</span>
                         </label>
                         <input type="url" name="photo" placeholder="Photo URL" className="input input-bordered" required />
                     </div>
                     <div className="form-control relative">
                         <label className="label">
-                            <span className="label-text">Password</span>
+                            <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Password</span>
                         </label>
                         <input type={!isPassShowing ? 'password' : 'text'} name="password" placeholder="Password" className="input input-bordered" required />
                         <p className="text-red-500 font semibold text-center p-2">{error}</p>
-                        <div onClick={handleShowPass} className="absolute right-6 text-gray-500 top-12 text-2xl">
+                        <div onClick={handleShowPass} className="absolute right-6 text-gray-300 top-12 text-2xl">
                             {
                                 !isPassShowing ? <IoIosEye /> : <IoIosEyeOff />
                             }
@@ -152,7 +152,7 @@ const Register = () => {
                         </label>
                     </div>
                     <div className="form-control mt-6">
-                        <button className="btn hover:bg-primary bg-primary text-white">Register</button>
+                        <button className="btn hover:bg-primary border-none bg-primary text-gray-300">Register</button>
                     </div>
                 </form>
             </div>

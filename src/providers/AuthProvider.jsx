@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [ userReviews, setUserReviews ] = useState([]);
     const [ watchlist, setWatchlist ] = useState([]);
+    const [ isModeDark, setIsModeDark ] = useState(true);
     const [isloading, setIsLoading] = useState(true);
     const auth = getAuth(app);
     useEffect(() => {
@@ -24,6 +25,9 @@ const AuthProvider = ({ children }) => {
                 .then(data => setWatchlist(data));
             }
             setIsLoading(false);
+            if(localStorage.getItem('isModeDark') === 'false'){
+                setIsModeDark(false);
+            }
             return () => unsubscribe();
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +41,9 @@ const AuthProvider = ({ children }) => {
         userReviews,
         setUserReviews,
         watchlist,
-        setWatchlist
+        setWatchlist,
+        isModeDark,
+        setIsModeDark,
     }
     return (
         <AuthContext.Provider value={authData}>

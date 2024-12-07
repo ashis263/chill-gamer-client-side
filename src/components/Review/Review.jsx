@@ -11,7 +11,7 @@ const Review = ({ review }) => {
         edit: false,
     };
     return (
-            <div className="card card-side bg-base-100 shadow-xl">
+            <div className="card card-side shadow-lg shadow-primary">
                 <figure className='w-2/5'>
                     <img className='h-full'
                         src={review.cover}
@@ -23,7 +23,7 @@ const Review = ({ review }) => {
                     <p className="text-xs sm:text:sm">{review.review}</p>
                     <p className="text-xs sm:text:sm text-gray-400">Review by: <span className='font-bold'>{review.name}</span></p>
                     <div className="card-actions">
-                    <button onClick={() => navigate(`/review/${review._id}`)} className="btn btn-xs sm:btn-sm hover:bg-primary bg-primary text-white">Explore Details</button>
+                    <button onClick={() => navigate(`/review/${review._id}`)} className="btn btn-xs sm:btn-sm hover:bg-primary border-none bg-primary text-gray-300">Explore Details</button>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const MainLayout = () => {
-    const { isloading } = useContext(AuthContext);
+    const { isloading, isModeDark } = useContext(AuthContext);
     if(isloading){
         return (
             <div className="flex justify-center items-center h-lvh">
@@ -13,11 +13,11 @@ const MainLayout = () => {
         )
     }else{
         return (
-            <div>
+            <div className={`${isModeDark ? 'bg-gray-900 text-gray-300' : ''}`}>
                 <header>
                     <Navbar></Navbar>
                 </header>
-                <main>
+                <main className="min-h-[90vh]">
                     <Outlet></Outlet>
                 </main>
                 <footer>

@@ -103,11 +103,11 @@ const MyReview = ({ currentReview }) => {
     const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You won't be able to undo this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#48ac90",
-            cancelButtonColor: "#d33",
+            cancelButtonColor: "#808080",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {

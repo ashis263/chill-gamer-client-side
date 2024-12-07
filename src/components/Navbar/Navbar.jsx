@@ -5,10 +5,11 @@ import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { signOut } from 'firebase/auth';
 import { Tooltip } from 'react-tooltip';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { MdLightMode, MdDarkMode } from "react-icons/md";
 
 const Navbar = () => {
-    const { user, auth, setUser } = useContext(AuthContext);
+    const { user, auth, setUser, isModeDark, setIsModeDark } = useContext(AuthContext);
     const navigate = useNavigate();
     const navLinks = <>
         <NavLink className="" to="/">Home</NavLink>
@@ -36,10 +37,15 @@ const Navbar = () => {
             title: "Logged out successfully"
           });
         navigate('/');
+    };
+    const handleMode = () => {
+        setIsModeDark(!isModeDark);
+        localStorage.removeItem('isModeDark');
+        localStorage.setItem('isModeDark', !isModeDark);
     }
     return (
-        <div className='w-11/12 mx-auto my-2'>
-            <div className="navbar bg-base-100 p-0">
+        <div className='w-11/12 mx-auto py-2'>
+            <div className="navbar p-0">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="px-0 btn btn-ghost lg:hidden">
@@ -73,6 +79,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end space-x-2">
+                    <button onClick={handleMode} className="btn btn-ghost btn-xs sm:btn-sm border-none text-primary rounded-none hover:bg-transparent"><MdLightMode className={`${isModeDark ? "text-2xl" : "text-2xl hidden"}`} /><MdDarkMode className={`${isModeDark ? "text-2xl hidden" : "text-2xl"}`} /></button>
                     {
                         user && <>
                             <img id="userImg" src={user.photoURL} className='w-6 h-6 sm:h-8 sm:w-8 rounded-full' alt="" />
@@ -81,9 +88,9 @@ const Navbar = () => {
                             </Tooltip>
                         </>
                     }
-                    <Link to="login" className={!user ? "btn btn-xs sm:btn-sm rounded-none hover:bg-transparent text-primary" : "hidden"}>Login</Link>
-                    <Link to="register" className={!user ? "btn btn-xs sm:btn-sm text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Register</Link>
-                    <button onClick={handleLogout} className={user ? "btn btn-xs sm:btn-sm text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
+                    <Link to="login" className={!user ? "btn btn-xs sm:btn-sm border-none rounded-none text-primary" : "hidden"}>Login</Link>
+                    <Link to="register" className={!user ? "btn btn-xs sm:btn-sm border-none text-gray-300 bg-primary hover:bg-primary rounded-none" : "hidden"}>Register</Link>
+                    <button onClick={handleLogout} className={user ? "btn btn-xs sm:btn-sm border-none text-gray-300 bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
                 </div>
             </div>
         </div>
