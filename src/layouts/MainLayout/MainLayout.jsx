@@ -2,13 +2,14 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Footer from "../../components/Footer/Footer";
 
 const MainLayout = () => {
     const { isloading, isModeDark } = useContext(AuthContext);
     if(isloading){
         return (
             <div className="flex justify-center items-center h-lvh">
-                <span className="loading loading-dots loading-lg text-primary"></span>
+                <span className="loading loading-spinner loading-lg text-primary"></span>
             </div>
         )
     }else{
@@ -17,11 +18,11 @@ const MainLayout = () => {
                 <header>
                     <Navbar></Navbar>
                 </header>
-                <main className="min-h-[90vh]">
+                <main className="min-h-[60vh]">
                     <Outlet></Outlet>
                 </main>
                 <footer>
-    
+                    <Footer></Footer>
                 </footer>
             </div>
         );

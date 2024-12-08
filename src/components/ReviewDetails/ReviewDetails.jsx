@@ -3,6 +3,8 @@ import ReactStars from "react-rating-stars-component";
 import { useContext } from "react";
 import { AuthContext } from '../../providers/AuthProvider'
 import Swal from 'sweetalert2';
+import 'animate.css';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const ReviewDetails = () => {
     const { user, watchlist, setWatchlist } = useContext(AuthContext);
@@ -50,7 +52,11 @@ const ReviewDetails = () => {
         })
     }
     return (
-        <div className="w-11/12 mx-auto rounded-xl p-5 sm:p-10 shadow-primary shadow-lg">
+        <div className="animate__animated animate__fadeIn w-11/12 mx-auto rounded-xl p-5 sm:p-10 shadow-primary shadow-lg">
+            <HelmetProvider>
+                <Helmet>
+                    <title>{review.title}</title>
+                </Helmet>
             <h1 className="w-4/5 mx-auto text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary mb-5 sm:mb-10">{review.title}</h1>
             <div className="space-y-5 sm:flex justify-center items-center">
                 <div className="w-3/5 mx-auto sm:w-1/4">
@@ -76,6 +82,7 @@ const ReviewDetails = () => {
                     </div>
                 </div>
             </div>
+            </HelmetProvider>
         </div>
     );
 }

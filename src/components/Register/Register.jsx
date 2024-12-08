@@ -6,6 +6,8 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, up
 import Swal from 'sweetalert2'
 import Lottie from "lottie-react";
 import register from "../../assets/register.json";
+import 'animate.css';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Register = () => {
     const { auth, user, setUser, setIsLoading, isModeDark } = useContext(AuthContext);
@@ -105,7 +107,11 @@ const Register = () => {
         }
     });
     return (
-        <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto shadow-primary rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
+        <div className="animate__animated animate__fadeIn w-11/12 sm:w-4/5 lg:w-3/4 mx-auto shadow-primary rounded-xl shadow-lg flex flex-col sm:flex-row-reverse">
+            <HelmetProvider>
+                <Helmet>
+                    <title>Register</title>
+                </Helmet>
             <div className=" bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
                 <Lottie animationData={register} loop={true} />
             </div>
@@ -156,6 +162,7 @@ const Register = () => {
                     </div>
                 </form>
             </div>
+            </HelmetProvider>
         </div>
     );
 }

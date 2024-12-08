@@ -6,6 +6,8 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 import Swal from 'sweetalert2'
 import Lottie from "lottie-react";
 import login from "../../assets/login.json";
+import 'animate.css';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Login = () => {
     const  { auth, user, setUser, setIsLoading, isModeDark } = useContext(AuthContext);
@@ -85,7 +87,11 @@ const Login = () => {
         }
       });
     return (
-        <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto shadow-primary rounded-xl shadow-lg lg:my-10 flex flex-col sm:flex-row">
+        <div className="animate__animated animate__fadeIn w-11/12 sm:w-4/5 lg:w-3/4 mx-auto shadow-primary rounded-xl shadow-lg lg:my-10 flex flex-col sm:flex-row">
+            <HelmetProvider>
+                <Helmet>
+                    <title>login</title>
+                </Helmet>
             <div className="bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
             <Lottie animationData={login} loop={true} />
             </div>
@@ -123,6 +129,7 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+            </HelmetProvider>
         </div>
     );
 }

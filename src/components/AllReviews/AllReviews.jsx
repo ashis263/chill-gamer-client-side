@@ -1,6 +1,8 @@
 import { useLoaderData } from "react-router"
 import Review from "../Review/Review";
 import { useState } from "react";
+import 'animate.css';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const AllReviews = () => {
     const data = useLoaderData();
@@ -19,7 +21,11 @@ const AllReviews = () => {
         setReviews([ ... filtered ]);
     }
     return (
-        <div className="w-11/12 mx-auto">
+        <div className="animate__animated animate__fadeIn w-11/12 mx-auto">
+            <HelmetProvider>
+                <Helmet>
+                    <title>All Reviews</title>
+                </Helmet>
             <h1 className="text-2xl text-center sm:text-3xl lg:text-5xl sm:pt-0 font-bold text-primary ">All Reviews</h1>
             <div className="flex justify-center pt-2 sm:pt-10 gap-5">
                 <div className="dropdown dropdown-hover">
@@ -45,6 +51,7 @@ const AllReviews = () => {
                     reviews && reviews.map(review => <Review key={review._id} review={review}></Review>)
                 }
             </div>
+            </HelmetProvider>
         </div>
     );
 }

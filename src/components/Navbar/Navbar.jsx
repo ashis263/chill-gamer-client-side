@@ -89,8 +89,8 @@ const Navbar = () => {
                         </>
                     }
                     <Link to="login" className={!user ? "btn btn-xs sm:btn-sm border-none rounded-none text-primary" : "hidden"}>Login</Link>
-                    <Link to="register" className={!user ? "btn btn-xs sm:btn-sm border-none text-gray-300 bg-primary hover:bg-primary rounded-none" : "hidden"}>Register</Link>
-                    <button onClick={handleLogout} className={user ? "btn btn-xs sm:btn-sm border-none text-gray-300 bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
+                    <Link to="register" className={!user ? "btn btn-xs sm:btn-sm border-none text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Register</Link>
+                    <button onClick={handleLogout} className={user ? "btn btn-xs sm:btn-sm border-none text-white bg-primary hover:bg-primary rounded-none" : "hidden"}>Logout</button>
                 </div>
             </div>
         </div>

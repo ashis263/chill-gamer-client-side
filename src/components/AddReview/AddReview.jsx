@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import 'animate.css';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const AddReview = () => {
     const { user,userReviews, setUserReviews, isModeDark } = useContext(AuthContext);
@@ -63,7 +65,11 @@ const AddReview = () => {
         })
     }
     return (
-        <div className="w-11/12 sm:w-4/5 lg:w-3/4 mx-auto rounded-xl shadow-lg shadow-primary flex flex-col sm:flex-row">
+        <div className="animate__animated animate__fadeIn w-11/12 sm:w-4/5 lg:w-3/4 mx-auto rounded-xl shadow-lg shadow-primary flex flex-col sm:flex-row">
+            <HelmetProvider>
+                <Helmet>
+                    <title>Add Review</title>
+                </Helmet>
             <div className="hidden sm:flex bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex-col justify-center items-center gap-5">
                 <Lottie animationData={review} loop={true} />
             </div>
@@ -141,6 +147,7 @@ const AddReview = () => {
                     </div>
                 </form>
             </div>
+            </HelmetProvider>
         </div>
     );
 }

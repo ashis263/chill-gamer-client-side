@@ -9,6 +9,7 @@ import PrivateRoute from '../routes/PrivateRoute'
 import AllReviews from '../components/AllReviews/AllReviews';
 import ReviewDetails from '../components/ReviewDetails/ReviewDetails';
 import Errorpage from '../components/Errorpage/Errorpage';
+import Home from '../components/Home/Home';
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         element: <MainLayout></MainLayout>,
         errorElement: <Errorpage></Errorpage>,
         children: ([
+            {
+                path: '/',
+                element: <Home></Home>
+            },
             {
                 path:'login',
                 element: <Login></Login>
