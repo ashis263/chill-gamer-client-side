@@ -14,6 +14,9 @@ const AuthProvider = ({ children }) => {
     const [isModeDark, setIsModeDark] = useState(true);
     const [isloading, setIsLoading] = useState(true);
     const [recent, setRecent] = useState([]);
+    const [reviews, setReviews ] = useState([]);
+    const [totalUsers, setTotalUsers] = useState({});
+    const [watchlistAll, setWatchlistAll] = useState([]);
     const auth = getAuth(app);
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
@@ -40,14 +43,30 @@ const AuthProvider = ({ children }) => {
             .then(data => {
                 setHighlyRated(data);
             });
+        fetch('https://chill-gamer-server-puce.vercel.app/users')
+            .then(res => res.json())
+            .then(data => {
+                setTotalUsers(data);
+            });
+        fetch('https://chill-gamer-server-puce.vercel.app/watchlist/all')
+            .then(res => res.json())
+            .then(data => {
+                setWatchlistAll(data);
+            });
+        fetch('https://chill-gamer-server-puce.vercel.app/highlyrated')
+            .then(res => res.json())
+            .then(data => {
+                setHighlyRated(data);
+            });
             fetch(`https://chill-gamer-server-puce.vercel.app/reviews`)
                 .then(res => res.json())
                 .then(data => {
+                    setReviews([...data]);
                     const reversed = [...data].reverse();
                     const slicedReversed = reversed.slice(0, 3);
                     setRecent([...slicedReversed])
                 });
-    }, [userReviews]);
+    }, [userReviews, watchlist]);
     const authData = {
         auth,
         setUser,
@@ -61,7 +80,10 @@ const AuthProvider = ({ children }) => {
         isModeDark,
         setIsModeDark,
         highlyrated,
-        recent
+        recent,
+        reviews,
+        totalUsers,
+        watchlistAll
     }
     return (
         <AuthContext.Provider value={authData}>

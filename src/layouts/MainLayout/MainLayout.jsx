@@ -8,7 +8,7 @@ const MainLayout = () => {
     const { isloading, isModeDark } = useContext(AuthContext);
     if(isloading){
         return (
-            <div className="flex justify-center items-center h-lvh">
+            <div className="flex justify-center items-center h-lvh bg-gray-900">
                 <span className="loading loading-spinner loading-lg text-primary"></span>
             </div>
         )
