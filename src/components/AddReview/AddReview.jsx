@@ -70,7 +70,7 @@ const AddReview = () => {
                 <Helmet>
                     <title>Add Review</title>
                 </Helmet>
-            <div className="hidden sm:flex bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex-col justify-center items-center gap-5">
+            <div className="hidden sm:flex bg-[#48ac90a1] text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex-col justify-center items-center gap-5">
                 <Lottie animationData={review} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10 lg:py-20">

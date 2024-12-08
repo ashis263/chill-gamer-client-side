@@ -92,7 +92,7 @@ const Login = () => {
                 <Helmet>
                     <title>login</title>
                 </Helmet>
-            <div className="bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
+            <div className="bg-[#48ac90a1] text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-l-lg sm:rounded-r-none text-center flex flex-col justify-center items-center gap-5">
             <Lottie animationData={login} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10 lg:py-20">

@@ -13,17 +13,18 @@ const AuthProvider = ({ children }) => {
     const [highlyrated, setHighlyRated] = useState([]);
     const [isModeDark, setIsModeDark] = useState(true);
     const [isloading, setIsLoading] = useState(true);
+    const [recent, setRecent] = useState([]);
     const auth = getAuth(app);
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             if (user) {
                 setUser(user);
                 fetch(`https://chill-gamer-server-puce.vercel.app/reviews/${user.email}`)
-                .then(res => res.json())
-                .then(data => setUserReviews(data));
+                    .then(res => res.json())
+                    .then(data => setUserReviews(data));
                 fetch(`https://chill-gamer-server-puce.vercel.app/watchlist/${user.email}`)
-                .then(res => res.json())
-                .then(data => setWatchlist(data));
+                    .then(res => res.json())
+                    .then(data => setWatchlist(data));
             }
             setIsLoading(false);
             if (localStorage.getItem('isModeDark') === 'false') {
@@ -39,6 +40,13 @@ const AuthProvider = ({ children }) => {
             .then(data => {
                 setHighlyRated(data);
             });
+            fetch(`https://chill-gamer-server-puce.vercel.app/reviews`)
+                .then(res => res.json())
+                .then(data => {
+                    const reversed = [...data].reverse();
+                    const slicedReversed = reversed.slice(0, 3);
+                    setRecent([...slicedReversed])
+                });
     }, [userReviews]);
     const authData = {
         auth,
@@ -52,7 +60,8 @@ const AuthProvider = ({ children }) => {
         setWatchlist,
         isModeDark,
         setIsModeDark,
-        highlyrated
+        highlyrated,
+        recent
     }
     return (
         <AuthContext.Provider value={authData}>

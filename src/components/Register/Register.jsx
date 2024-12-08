@@ -112,7 +112,7 @@ const Register = () => {
                 <Helmet>
                     <title>Register</title>
                 </Helmet>
-            <div className=" bg-primary text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
+            <div className="bg-[#48ac90a1] text-gray-300 sm:w-1/2 p-10  rounded-t-lg sm:rounded-r-lg sm:rounded-l-none text-center flex flex-col justify-center items-center gap-5">
                 <Lottie animationData={register} loop={true} />
             </div>
             <div className="w-full sm:w-1/2 p-5 mx-auto py-5 sm:py-10">

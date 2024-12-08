@@ -1,16 +1,13 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
 import review from '../../assets/review.json'
 import experience from '../../assets/experience.json'
 import opinion from '../../assets/opinion.json'
 import Lottie from "lottie-react";
 
 const Banner = () => {
-    const { isModeDark } = useContext(AuthContext);
     return (
-        <div className={`${isModeDark ? 'bg-[#48ac90a7]' : 'bg-[#e4f3f0]'}`}>
+        <div className="text-primary">
             <Carousel showStatus="" showThumbs="" infiniteLoop autoPlay showIndicators="">
                 <div className="w-11/12 mx-auto py-5 sm:py-10 flex justify-center items-center gap-10 sm:gap-20"> 
                     <div>

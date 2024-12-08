@@ -2,6 +2,7 @@ import Banner from "../Banner/Banner";
 import 'animate.css';
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import HighestRated from "../HighestRated/HighestRated";
+import RecentlyReviewed from "../Recently Reviewed/RecentlyReviewed";
 
 const Home = () => {
     return (
@@ -12,6 +13,7 @@ const Home = () => {
                 </Helmet>
             <Banner></Banner>
             <HighestRated></HighestRated>
+            <RecentlyReviewed></RecentlyReviewed>
             </HelmetProvider>
         </div>
     );

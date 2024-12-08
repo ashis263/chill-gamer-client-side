@@ -6,7 +6,7 @@ const HighestRated = () => {
     const { highlyrated } = useContext(AuthContext);
     return (
         <div className="w-11/12 mx-auto">
-            <h1 className="text-xl sm:text-2xl lg:text-4xl py-5 sm:py-10 font-bold text-primary">Highest Rated Games</h1>
+            <h1 className="text-xl sm:text-2xl lg:text-4xl py-5 sm:py-10 font-bold">Highest Rated Games</h1>
                 {
                     !highlyrated.length && <div className="flex justify-center items-center py-10">
                         <span className="loading loading-spinner loading-lg text-primary"></span>
