@@ -43,7 +43,7 @@ const MyReview = ({ currentReview }) => {
         const existingWatchItem = watchlist.find(item => item.findingKey === reviewToRender._id + reviewToRender.email);
         const updatedReview = {
             findingKey: existingWatchItem?.findingKey,
-            _id: reviewToRender._id,
+            _id: currentReview._id,
             name,
             email,
             cover,
@@ -90,6 +90,11 @@ const MyReview = ({ currentReview }) => {
                     Toast.fire({
                         icon: "success",
                         title: "Review updated successfully"
+                    });
+                }else{
+                    Toast.fire({
+                        icon: "warning",
+                        title: "Please change some data to update!"
                     });
                 }
             })

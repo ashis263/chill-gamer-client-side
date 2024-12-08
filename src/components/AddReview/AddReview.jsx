@@ -48,8 +48,10 @@ const AddReview = () => {
             },
             body: JSON.stringify(currentReview)
         })
-        .then(() => {
-            setUserReviews([...userReviews, currentReview])
+        .then(res => res.json())
+        .then(data => {
+            const afterAdding = { ...currentReview, _id: data.insertedId}
+            setUserReviews([...userReviews, afterAdding])
             Toast.fire({
                 icon: "success",
                 title: "Review added successfully"

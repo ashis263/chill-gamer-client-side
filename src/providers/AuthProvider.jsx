@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
                     const slicedReversed = reversed.slice(0, 3);
                     setRecent([...slicedReversed])
                 });
-    }, [userReviews, watchlist]);
+    }, [userReviews, watchlist, user]);
     const authData = {
         auth,
         setUser,
