@@ -22,7 +22,7 @@ const Login = () => {
         .then(res => {
             const user = res.user;
             const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL};
-            fetch('http://localhost:5000/users', {
+            fetch('https://chill-gamer-server-puce.vercel.app/users', {
                 method: 'put',
                 headers: {
                     'content-type': 'application/json'
@@ -52,7 +52,7 @@ const Login = () => {
         .then(res => {
             const user = res.user;
             const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL};
-            fetch('http://localhost:5000/users', {
+            fetch('https://chill-gamer-server-puce.vercel.app/users', {
                 method: 'put',
                 headers: {
                     'content-type': 'application/json'
@@ -108,13 +108,13 @@ const Login = () => {
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Email</span>
                         </label>
-                        <input type="email" name="email" placeholder="Email" className="input input-bordered" required />
+                        <input type="email" name="email" placeholder="Email" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                     </div>
                     <div className="form-control relative">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Password</span>
                         </label>
-                        <input type={!isPassShowing ? 'password' : 'text'} name="password" placeholder="Password" className="input input-bordered" required />
+                        <input type={!isPassShowing ? 'password' : 'text'} name="password" placeholder="Password" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                         <div onClick={handleShowPass} className="absolute right-6 text-gray-300 top-12 text-2xl">
                             {
                                 !isPassShowing ? <IoIosEye /> : <IoIosEyeOff />

@@ -23,7 +23,7 @@ const Register = () => {
             .then(res => {
                 const user = res.user;
                 const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL };
-                fetch('http://localhost:5000/users', {
+                fetch('https://chill-gamer-server-puce.vercel.app/users', {
                     method: 'put',
                     headers: {
                         'content-type': 'application/json'
@@ -70,7 +70,7 @@ const Register = () => {
                         .then(() => {
                     const user = res.user;
                     const current = { name: user.displayName, email: user.email, createdAt: user.metadata.creationTime, lastLogin: user.metadata.lastSignInTime, photo: user.photoURL };
-                    fetch('http://localhost:5000/users', {
+                    fetch('https://chill-gamer-server-puce.vercel.app/users', {
                         method: 'put',
                         headers: {
                             'content-type': 'application/json'
@@ -128,25 +128,25 @@ const Register = () => {
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Name</span>
                         </label>
-                        <input type="text" name="name" placeholder="Name" className="input input-bordered" required />
+                        <input type="text" name="name" placeholder="Name" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Email</span>
                         </label>
-                        <input type="email" name="email" placeholder="Email" className="input input-bordered" required />
+                        <input type="email" name="email" placeholder="Email" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Photo URL</span>
                         </label>
-                        <input type="url" name="photo" placeholder="Photo URL" className="input input-bordered" required />
+                        <input type="url" name="photo" placeholder="Photo URL" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                     </div>
                     <div className="form-control relative">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Password</span>
                         </label>
-                        <input type={!isPassShowing ? 'password' : 'text'} name="password" placeholder="Password" className="input input-bordered" required />
+                        <input type={!isPassShowing ? 'password' : 'text'} name="password" placeholder="Password" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                         <p className="text-red-500 font semibold text-center p-2">{error}</p>
                         <div onClick={handleShowPass} className="absolute right-6 text-gray-300 top-12 text-2xl">
                             {

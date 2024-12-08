@@ -83,7 +83,7 @@ const Navbar = () => {
                     {
                         user && <>
                             <img id="userImg" src={user.photoURL} className='w-6 h-6 sm:h-8 sm:w-8 rounded-full' alt="" />
-                            <Tooltip anchorSelect="#userImg" place="top">
+                            <Tooltip className='z-10' anchorSelect="#userImg" place="top">
                                 {user.displayName}
                             </Tooltip>
                         </>

@@ -28,7 +28,7 @@ const ReviewDetails = () => {
     const handleWatchlist = () => {
         const { _id, ...updatedReview } = review;
         const dataToSaveInDatabase = { ...updatedReview, findingKey: _id+user.email, watchlister: user.displayName, watchlisterEmail: user.email};
-        fetch('http://localhost:5000/watchlist', {
+        fetch('https://chill-gamer-server-puce.vercel.app/watchlist', {
             method: 'put',
             headers: {
                 'content-type' : 'application/json'

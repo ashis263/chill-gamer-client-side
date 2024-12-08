@@ -41,7 +41,7 @@ const AddReview = () => {
               toast.onmouseleave = Swal.resumeTimer;
             }
           });
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://chill-gamer-server-puce.vercel.app/reviews', {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -94,25 +94,25 @@ const AddReview = () => {
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Game Cover Image</span>
                         </label>
-                        <input type="url" name="cover" placeholder="Game cover URL" className="input input-bordered" required />
+                        <input className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} type="url" name="cover" placeholder="Game cover URL" required />
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Game Title</span>
                         </label>
-                        <input type="text" name="title" placeholder="Game Title" className="input input-bordered" required />
+                        <input type="text" name="title" placeholder="Game Title" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Review</span>
                         </label>
-                        <textarea className="textarea textarea-bordered" name="review" placeholder="Your Review"></textarea>
+                        <textarea className={`label-text  ${isModeDark ? "text-black textarea textarea-bordered" : "textarea textarea-bordered"}`} name="review" placeholder="Your Review"></textarea>
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className={`label-text  ${isModeDark ? "text-gray-300" : ""}`}>Publishing Year</span>
                         </label>
-                        <input  type="number" min="1900" max="2099" step="1" name="year" placeholder="Year" className="input input-bordered" required />
+                        <input  type="number" min="1900" max="2099" step="1" name="year" placeholder="Year" className={`label-text  ${isModeDark ? "text-black input input-bordered" : "input input-bordered"}`} required />
                     </div>
                     <div className="flex gap-5">
                         <div className="form-control">
