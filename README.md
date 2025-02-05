@@ -58,7 +58,7 @@
 <p>Follow these steps to set up <strong>Chill Gamer</strong> on your local machine:</p>
 
 <h3>1️⃣ Clone the Repository</h3>
-<pre><code>git clone https://github.com/your-username/chill-gamer.git
+<pre><code>git clone https://github.com/ashis263/chill-gamer.git
 cd chill-gamer</code></pre>
 
 <h3>2️⃣ Install Dependencies</h3>
