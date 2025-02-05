@@ -59,7 +59,7 @@
 
 <h3>1️⃣ Clone the Repository</h3>
 <pre><code>git clone https://github.com/ashis263/chill-gamer-client-side.git
-cd chill-gamer</code></pre>
+cd chill-gamer-client-side</code></pre>
 
 <h3>2️⃣ Install Dependencies</h3>
 <pre><code>npm install</code></pre>
